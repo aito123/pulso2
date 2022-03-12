@@ -27,6 +27,12 @@ fusen::fill_description(
 )
 # Define License with use_*_license()
 usethis::use_mit_license("Sébastien Rochette")#osea en ningun lugar usa tilde excepto aca.
+
+#automatic commit
+# usethis::use_git()
+
+# Cambiar la version del paquete
+# usethis::use_version()
 ```
 
 # Start using git
