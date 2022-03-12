@@ -12,7 +12,7 @@ All commands that you use to use when developing packages...
 - Fill the following chunk to create the DESCRIPTION of your package
 
 ```{r description, eval=FALSE}
-# Describe your package
+# Describe your package, se puede añadir la version desde aca?
 fusen::fill_description(
   pkg = here::here(),
   fields = list(
@@ -21,11 +21,12 @@ fusen::fill_description(
     `Authors@R` = c(
       person("Sebastien", "Rochette", email = "sebastien@thinkr.fr", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1565-9313")),
       person(given = "ThinkR", role = "cph")
-    )
+    ),
+    Language = "es"
   )
 )
 # Define License with use_*_license()
-usethis::use_mit_license("Sébastien Rochette")
+usethis::use_mit_license("Sébastien Rochette")#osea en ningun lugar usa tilde excepto aca.
 ```
 
 # Start using git
@@ -91,6 +92,7 @@ devtools::check()
 # set and try pkgdown documentation website
 usethis::use_pkgdown()
 pkgdown::build_site()
+usethis::use_pkgdown_github_pages()
 
 # build the tar.gz to share with others
 devtools::build()
