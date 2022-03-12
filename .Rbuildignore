@@ -1,2 +1,10 @@
 
 ^dev$
+^LICENSE\.md$
+^pulso2\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
