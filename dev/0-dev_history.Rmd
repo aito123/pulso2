@@ -29,7 +29,7 @@ fusen::fill_description(
 usethis::use_mit_license("Sébastien Rochette")#osea en ningun lugar usa tilde excepto aca.
 
 #automatic commit
-# usethis::use_git()
+# usethis::use_git("Second commit")
 
 # Cambiar la version del paquete
 # usethis::use_version()
