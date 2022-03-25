@@ -6,7 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of pulso2 is to …
+áéíóúñ¿?
+
+El objetivo del paquete `pulso` es facilitar la elaboracion de los
+informes del Area de Proyectos del Instituto de Analitica Social e
+Inteligencia Estratégica Pulso PUCP.
 
 ## Installation
 
