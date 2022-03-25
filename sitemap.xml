@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aito123.github.io/pulso2/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/LICENSE-text.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/LICENSE.html</loc>
+    <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/articles/get-started.html</loc>
+    <loc>/articles/get-started.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/reference/my_median.html</loc>
+    <loc>/reference/my_median.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/reference/my_other_median.html</loc>
+    <loc>/reference/my_other_median.html</loc>
   </url>
   <url>
-    <loc>https://aito123.github.io/pulso2/reference/sub_median.html</loc>
+    <loc>/reference/sub_median.html</loc>
   </url>
 </urlset>
