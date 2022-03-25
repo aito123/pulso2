@@ -17,12 +17,12 @@ fusen::fill_description(
   pkg = here::here(),
   fields = list(
     Title = "Funciones para los informes Pulso PUCP",
-    Description = "Funciones para los informes Pulso PUCP",
+    Description = "Funciones para los informes Pulso PUCP.",
     `Authors@R` = c(
       person("Santiago", "Sotelo", email = "santiago.sotelo@pucp.edu.pe", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9739-9964"))
     ),
     Language = "es"
-  )
+  ),overwrite = TRUE
 )
 # Define License with use_*_license()
 usethis::use_mit_license("Santiago Sotelo")
@@ -97,7 +97,7 @@ devtools::check()
 # set and try pkgdown documentation website
 usethis::use_pkgdown()
 pkgdown::build_site(override=list(lang="es"))
-usethis::use_pkgdown_github_pages()
+usethis::use_pkgdown_github_pages(override=list(lang="es"))
 
 # build the tar.gz to share with others
 devtools::build()

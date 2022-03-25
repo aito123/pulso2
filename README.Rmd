@@ -18,20 +18,18 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-áéíóúñ¿?
+El objetivo del paquete `pulso` es facilitar la elaboración de los informes del Área de Proyectos del Instituto de Analítica Social e Inteligencia Estratégica Pulso PUCP.
 
-El objetivo del paquete `pulso` es facilitar la elaboracion de los informes del Area de Proyectos del Instituto de Analitica Social e Inteligencia Estratégica Pulso PUCP.
+## Instalación
 
-## Installation
-
-You can install the development version of pulso2 from [GitHub](https://github.com/aito123/pulso2) with:
+Puede instalar la versión en desarrollo de `pulso2` desde [GitHub](https://github.com/aito123/pulso2) con:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("aito123/pulso2")
 ```
 
-## Example
+## Ejemplo
 
 This is a basic example which shows you how to solve a common problem:
 
