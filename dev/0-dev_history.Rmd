@@ -12,7 +12,8 @@ All commands that you use to use when developing packages...
 - Fill the following chunk to create the DESCRIPTION of your package
 
 ```{r description, eval=FALSE}
-# Describe your package, se puede añadir la version desde aca?
+# Describe your package
+#Pasos 1) correr fill description, 2) correr licence 3) inflar flat_full
 fusen::fill_description(
   pkg = here::here(),
   fields = list(
