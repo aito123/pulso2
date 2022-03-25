@@ -20,6 +20,8 @@ If it is the first time you use {fusen}, after 'description', you can directly r
 
 # Include some data examples in your package
 
+áéíóýúñ
+
 <!-- 
  Store your dataset in a directory named "inst/" at the root of your project.
  Use it for your tests in this Rmd thanks to `pkgload::load_all()` to make it available

@@ -1,14 +1,21 @@
 Package: pulso2
-Version: 1.0.0
 Title: Funciones Para Los Informes Pulso PUCP
+Version: 1.0.0
+Authors@R: 
+    person("Santiago", "Sotelo", , "santiago.sotelo@pucp.edu.pe", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-9739-9964"))
 Description: Funciones para los informes Pulso PUCP.
-Authors@R: person(given = "Santiago",
-       family = "Sotelo",
-       role = c("aut", "cre"),
-       email = "santiago.sotelo@pucp.edu.pe",
-       comment = c(ORCID = "0000-0002-9739-9964"))
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a license
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Imports: 
+    qpdf,
+    testthat
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
+Language: es
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Language: es
