@@ -1,5 +1,6 @@
 ---
 title: "Development actions history"
+author: "Santiago Sotelo"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -14,17 +15,34 @@ All commands that you use to use when developing packages...
 ```{r description, eval=FALSE}
 # Describe your package
 #Pasos 1) correr fill description, 2) correr licence 3) inflar flat_full
+# fusen::fill_description(
+#   pkg = here::here(),
+#   fields = list(
+#     Title = "Funciones para los informes Pulso PUCP",
+#     Description = "Funciones para los informes Pulso PUCP.",
+#     `Authors@R` = c(
+#       person("Santiago", "Sotelo", email = "santiago.sotelo@pucp.edu.pe", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9739-9964"))
+#     ),
+#     Language = "es"
+#   ),overwrite = TRUE
+# )
+
+#fill_des antiguo
 fusen::fill_description(
   pkg = here::here(),
   fields = list(
+    Package = "pulso",
     Title = "Funciones para los informes Pulso PUCP",
-    Description = "Funciones para los informes Pulso PUCP.",
-    `Authors@R` = c(
-      person("Santiago", "Sotelo", email = "santiago.sotelo@pucp.edu.pe", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9739-9964"))
-    ),
-    Language = "es"
-  ),overwrite = TRUE
+    Description = "Conjunto de funciones para los informes de Pulso PUCP.",
+    `Authors@R` = c(person(given = "Santiago", 
+                           family = "Sotelo", 
+                           email = "santiago.sotelo@pucp.edu.pe", 
+                           role = c("aut", "cre"), 
+                           comment = c(ORCID = "0000-0002-9739-9964"))),
+    Language =  "es"
+  ), overwrite = TRUE
 )
+
 # Define License with use_*_license()
 usethis::use_mit_license("Santiago Sotelo")
 
@@ -96,7 +114,7 @@ devtools::check()
 
 ```{r}
 # set and try pkgdown documentation website
-usethis::use_pkgdown()
+usethis::use_pkgdown(override=list(lang="es"))
 pkgdown::build_site(override=list(lang="es"))
 usethis::use_pkgdown_github_pages(override=list(lang="es"))
 

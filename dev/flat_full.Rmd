@@ -9,7 +9,29 @@ editor_options:
 <!-- Store every call to library() that you need to explore your functions -->
 
 ```{r development, include=FALSE}
-library(testthat)
+
+#Paquetes necesarios
+pacman::p_load(
+    #test
+    pkgload, pkgdown, testthat,
+    #data tools
+    tidyverse, janitor, glue, lubridate, scales, Hmisc,lazyeval,
+    #Gráficos
+    plotly, ggrepel, cowplot, grid, fmsb, 
+    #importar / exportar
+    haven, rio, officer, officedown,
+    #Etiquetas
+    sjlabelled,
+    #tablas
+    flextable, knitr, kableExtra, DT, gtsummary,
+    #Temas
+    ggpubr,
+    #Colores
+    paletteer, RColorBrewer
+    )
+
+library(pulso2)
+
 ```
 
 <!--
@@ -17,10 +39,6 @@ library(testthat)
 
 If it is the first time you use {fusen}, after 'description', you can directly run the last chunk of the present file with inflate() inside.
 --> 
-
-# Include some data examples in your package
-
-áéíóýúñ
 
 <!-- 
  Store your dataset in a directory named "inst/" at the root of your project.
@@ -37,14 +55,194 @@ and `system.file()` to read it in your examples.
 pkgload::load_all(path = here::here(), export_all = FALSE)
 
 # You will be able to read your example data file in each of your function examples and tests as follows - see chunks below
-datafile <- system.file("nyc_squirrels_sample.csv", package = "pulso2")
-nyc_squirrels <- read.csv(datafile)
+#dir.create(here::here("inst"))
 
-nyc_squirrels
+# data_prueba_ruta <- system.file("data_prueba.sav", package = "pulso2")
+# data_prueba <- haven::read_sav(data_prueba_ruta)
+
 ```
 
+# Empezando...
 
-# The first function of the package: Calculate the median of a vector
+Para estos ejemplos se utilizara una base aleatoria de un estudio realizado por Pulso PUCP el cual nos permitira mostrar la manera en que se puede utilizar el paquete `pulso`
+
+# Barra simple
+
+```{r function-barra_simple}
+#' Funcion para realizar un grafico de barras simple.
+#' @import testthat
+#' @import qpdf
+#' @import pkgload
+#' @import pkgdown
+#' 
+#' @importFrom haven read_sav
+#' @importFrom dplyr filter count mutate select summarise arrange
+#' @importFrom forcats fct_rev fct_infreq fct_relevel
+#' @importFrom sjlabelled as_label
+#' @importFrom scales number_format label_wrap wrap_format number percent
+#' @importFrom ggplot2 ggplot geom_bar geom_text scale_x_discrete scale_y_continuous coord_flip labs theme aes position_dodge element_text element_line element_blank position_stack waiver
+#' @importFrom janitor round_half_up
+#' @importFrom ggpubr theme_pubr
+#' @importFrom glue glue
+#'
+#' @param data Base de datos para la funcion
+#' @param var Variable para el grafico de barras simple
+#' @param filtrar Por default TRUE que significa ningún filtro, si se quiere filtrar por una variable especificar la variable y el valor a filtrar (ej: filtrar = q0002 == 1 que significa filtrar la base para que aparezcan solo los casos que tienen en la pregunta q0002 el valor de 1).
+#' @param ordenado Por default es TRUE, significa que ordena las barras de menor a mayor, cambiar a FALSE para dejarlas en el orden original.
+#' @param frecuencia Por default es FALSE, cambiar a TRUE para visualizar los resultados en frecuencias y no en porcentajes.
+#' @param porcentaje Por default es TRUE, cambiar a FALSE para visualizar los resultados de porcentajes sin el simbolo %.
+#' @param ultimo Por default es NULL, escribir entre comillas la palabra que quieres que vaya al final de las barras (ej: ultimo="Otros")
+#' @param max.limit Por default es 1, es el limite máximo del eje x. 1=100 cuando son resultados en porcentajes (ej: max.limit=0.75 significa maximo 75%). Aunque el porcentaje esté en FALSE, el max.limit debe ser tratado como si 1.00 fuera el maximo y no como si 100 fuera el maximo.
+#' @param color Por default es color azul que es "#B0D597" en notacion hexagesimal. Buscar colores hex para más información. También permite colores grabados en R como "red".
+#' @param ext.label Por default es 30, a menor el número menor espacio para el texto de las etiquetas.
+#'
+#' @return
+#' Un grafico de barras simple.
+#' 
+#' @examples
+#' @export
+
+barra_simple<- function(data, var, filtrar=TRUE, ordenado=TRUE, frecuencia=FALSE,  porcentaje=TRUE, ultimo=NULL, max.limit=1, color = "#B0D597", ext.label=30){
+  
+  total<-nrow(data)
+  
+  if(isTRUE(ordenado)) {
+    
+    tablon<-data %>%
+      filter({{filtrar}}) %>% 
+      as_label() %>%
+      count(var = fct_rev(fct_infreq(factor({{var}}))) ) %>%
+      mutate(pct = prop.table(n))
+    
+  } else {
+    
+    tablon<-data %>%
+      filter({{filtrar}}) %>% 
+      as_label() %>%
+      count(var = fct_rev(factor({{var}}))) %>%
+      mutate(pct = prop.table(n))
+    
+  }
+  
+  if(isTRUE(frecuencia)) {
+    
+    tablon %>%
+      #grafico
+      ggplot(aes(x = fct_relevel(var, ultimo), y = n ) ) +
+      geom_bar(stat='identity', fill = color, width = 0.6) +
+      
+      #Etiqueta = -7%
+      geom_text(aes(label = ifelse(pct < 0.07, n, "") ),
+                position = position_dodge(width = .9),
+                vjust = 0.2,
+                hjust = -0.2,
+                size = 3.5,
+                fontface = "bold",
+                color = "#002060") +
+      
+      #Etiqueta = El resto
+      geom_text(aes(label = ifelse(pct >= 0.07, n, "") ),
+                position = position_stack(vjust = 0.5),
+                size = 3.5,
+                fontface = "bold",
+                color = "#002060") +
+      
+      scale_x_discrete(labels = wrap_format(ext.label)) +
+      scale_y_continuous(labels=number_format(accuracy =1), limits = c(0, if(max.limit==1){max(tablon$n) + round_half_up(max(tablon$n)/3)} else {max.limit} )) +
+      coord_flip() +
+      theme_pubr() +
+      labs(subtitle = "Resultados en frecuencias",
+           caption = "Elaborado por Pulso PUCP",
+           tag = if(sum(tablon$n) == total){glue("N=",sum(tablon$n))}else{glue("N=",sum(tablon$n),"/",total)}) +
+      theme(text = element_text(size = 9, color="#002060"),
+            
+            plot.subtitle = element_text(size = 10, color="#002060"),
+            plot.title.position = "plot",
+            
+            plot.caption = element_text(face = "italic"),
+            
+            plot.tag = element_text(size = 8, color="grey40"),
+            plot.tag.position = "topright",
+            
+            axis.title = element_blank(),
+            axis.text = element_text(color="#002060"),
+            axis.ticks = element_line(color="#002060"),
+            axis.line = element_line(color="#002060", size = 0.5) )
+    
+  } else {
+    
+    tablon %>%
+      #grafico
+      ggplot(aes(x = fct_relevel(var, ultimo), y = pct ) ) +
+      geom_bar(stat='identity', fill = color, width = 0.6) +
+      
+      #Etiqueta = -7%
+      geom_text(aes(label = ifelse(pct < 0.07, if(isTRUE(porcentaje)){scales::percent(pct, accuracy = 1)} else {scales::number(pct, scale = 100)} , "") ),
+                position = position_dodge(width = .9),
+                vjust = 0.2,
+                hjust = -0.2,
+                size = 3.5,
+                fontface = "bold",
+                color = "#002060") +
+      
+      #Etiqueta = El resto
+      geom_text(aes(label = ifelse(pct >= 0.07, if(isTRUE(porcentaje)){scales::percent(pct, accuracy = 1)} else {scales::number(pct, scale = 100)}, "") ),
+                position = position_stack(vjust = 0.5),
+                size = 3.5,
+                fontface = "bold",
+                color = "#002060") +
+      
+      scale_x_discrete(labels = wrap_format(ext.label)) +
+      scale_y_continuous(labels = if(isTRUE(porcentaje)) {~scales::percent(.x, accuracy = 1)} else {~scales::number(.x, scale = 100)}, limits = if(isTRUE(porcentaje)) {c(0, max.limit)} else { c(0, max.limit )} ) +
+      coord_flip() +
+      theme_pubr() +
+      labs(subtitle = if(isTRUE(porcentaje)){waiver()} else {"Resultados en porcentajes"},
+           caption = "Elaborado por Pulso PUCP",
+           tag = if(sum(tablon$n) == total){glue("N=",sum(tablon$n))}else{glue("N=",sum(tablon$n),"/",total)}) +
+      theme(text = element_text(size = 9, color="#002060"),
+            
+            plot.subtitle = element_text(size = 10, color="#002060"),
+            plot.title.position = "plot",
+            
+            plot.caption = element_text(face = "italic"),
+            
+            plot.tag = element_text(size = 8, color="grey40"),
+            plot.tag.position = "topright",
+            
+            axis.title = element_blank(),
+            axis.text = element_text(color="#002060"),
+            axis.ticks = element_line(color="#002060"),
+            axis.line = element_line(color="#002060", size = 0.5) )
+      
+  }
+  
+}
+
+```
+
+```{r examples-barra_simple}
+#library(pulso2)
+
+#importar base de datos
+data_prueba_ruta <- system.file("data_prueba.sav", package = "pulso2")
+data_prueba <- haven::read_sav(data_prueba_ruta)
+
+#aplicar funcion
+data_prueba |>
+  barra_simple(gedad, ordenado=FALSE)
+
+```
+
+```{r tests-barra_simple}
+
+# #importar base de datos
+# data_prueba_ruta <- system.file("data_prueba.sav", package = "pulso")
+# data_prueba <- haven::read_sav(data_prueba_ruta)
+# 
+# test_that("barra_simple works", {expect_error(data_prueba %>% barra_simple(gedad, ordenado=FALSE), regexp = NA)})
+
+
+```
 
 <!--
 Create a chunk for the core of the function
@@ -190,7 +388,8 @@ These are only included in the present flat template file, their content will no
 ```{r development-inflate, eval=FALSE}
 # Keep eval=FALSE to avoid infinite loop in case you hit the knit button
 # Execute in the console directly
-fusen::inflate(flat_file = "dev/flat_full.Rmd", vignette_name = "Get started")
+Sys.setlocale(category = "LC_ALL", locale = "Spanish_Spain.1252")
+fusen::inflate(flat_file = "dev/flat_full.Rmd", vignette_name = "Empezando")
 ```
 
 

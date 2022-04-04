@@ -1,14 +1,25 @@
-Package: pulso2
+Package: pulso
 Title: Funciones Para Los Informes Pulso PUCP
-Version: 1.0.0
+Version: 0.0.0.9000
 Authors@R: 
     person("Santiago", "Sotelo", , "santiago.sotelo@pucp.edu.pe", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9739-9964"))
-Description: Funciones para los informes Pulso PUCP.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Conjunto de funciones para los informes de Pulso PUCP.
+License: MIT + file LICENSE
 Imports: 
+    dplyr,
+    forcats,
+    ggplot2,
+    ggpubr,
+    glue,
+    haven,
+    janitor,
+    magrittr,
+    pkgdown,
+    pkgload,
     qpdf,
+    scales,
+    sjlabelled,
     testthat
 Suggests: 
     knitr,
